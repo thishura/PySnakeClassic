@@ -1,0 +1,60 @@
+import pygame
+import random
+
+# Initialize pygame
+pygame.init()
+
+# Set screen size
+screen = pygame.display.set_mode((800, 600))
+
+# Set title
+pygame.display.set_caption("Snake Game")
+
+# Set snake starting position
+snake_x = 300
+snake_y = 300
+
+# Set food starting position
+food_x = random.randint(0, 750)
+food_y = random.randint(0, 550)
+
+# Set snake size and color
+snake_size = 10
+snake_color = (255, 0, 0)
+
+# Set food size and color
+food_size = 10
+food_color = (0, 255, 0)
+
+# Set score
+score = 0
+
+# Main game loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Move snake
+    snake_x += 10
+    snake_y += 10
+
+    # Check for collision with food
+    if snake_x >= food_x and snake_x <= food_x + food_size:
+        if snake_y >= food_y and snake_y <= food_y + food_size:
+            score += 1
+            food_x = random.randint(0, 750)
+            food_y = random.randint(0, 550)
+
+    # Draw snake
+    pygame.draw.rect(screen, snake_color, (snake_x, snake_y, snake_size, snake_size))
+
+    # Draw food
+    pygame.draw.rect(screen, food_color, (food_x, food_y, food_size, food_size))
+
+    # Update screen
+    pygame.display.update()
+
+# Quit pygame
+pygame.quit()
